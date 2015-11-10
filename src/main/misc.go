@@ -21,15 +21,15 @@ func File_exists(path string) (bool, error) {
 }
 
 func Info(msg string){
-  fmt.Println("info: "+msg)
+	fmt.Println("info: "+msg)
 }
 
 func Err(msg string){
-  fmt.Println("Error: "+msg)
+	fmt.Println("Error: "+msg)
 }
 
 func Debug(msg string){
-  if DEBUG {
-    fmt.Println("debug: "+msg)
-  }
+	if DEBUG {
+		fmt.Println("debug: "+msg)
+  	}
 }

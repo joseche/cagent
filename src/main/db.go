@@ -11,8 +11,7 @@ type Table struct {
 }
 
 const (
-  DB_DIR  string = "/opt/cloudmetrics"
-  DB_FILE string = DB_DIR + "/pending"
+  DB_FILE string = MASTER_DIR + "/pending"
   
   CPUTIMES_TB string = "CpuTimes"
   LOADAVG_TB string = "LoadAVG"
@@ -74,13 +73,13 @@ func create_table(tbname string, tbcreate string, conn *sqlite3.Conn) (created b
 
 func init_db(){
 	
-  dir_exists,_ := File_exists(DB_DIR)
+  dir_exists,_ := File_exists(MASTER_DIR)
   if ! dir_exists {
-  	err := os.MkdirAll(DB_DIR,0755)
+  	err := os.MkdirAll(MASTER_DIR,0755)
   	if err != nil {
-  		panic("Can't create "+DB_DIR+", "+err.Error())
+  		panic("Can't create "+MASTER_DIR+", "+err.Error())
   	}
-  	Info(DB_DIR +" created")
+  	Info(MASTER_DIR +" created")
   }
 	
   file_exists,_ := File_exists(DB_FILE)
