@@ -9,11 +9,10 @@ const (
 var Running bool = true
 
 func main(){
+	initialize()
 	
-	//collector_done := make(chan bool)
-	//go collector_routine(collector_done)
+	collector_done := make(chan bool)
+	go collector_routine(collector_done)
 	
-	generate_ssl()
-	
-	//<- collector_done
+	<- collector_done
 }
