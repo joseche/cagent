@@ -1,8 +1,7 @@
 package main
 
 import (
-  "github.com/mxk/go-sqlite/sqlite3"
-  "os"
+	"github.com/mxk/go-sqlite/sqlite3"
 )
 
 type Table struct {
@@ -71,36 +70,6 @@ func create_table(tbname string, tbcreate string, conn *sqlite3.Conn) (created b
   return created
 }
 
-func init_db(){
-	
-  dir_exists,_ := File_exists(MASTER_DIR)
-  if ! dir_exists {
-  	err := os.MkdirAll(MASTER_DIR,0755)
-  	if err != nil {
-  		panic("Can't create "+MASTER_DIR+", "+err.Error())
-  	}
-  	Info(MASTER_DIR +" created")
-  }
-	
-  file_exists,_ := File_exists(DB_FILE)
-  if ! file_exists {
-  	Info("Local DB doesn't exist, creating new")
-  }
-  
-  conn, err := sqlite3.Open( DB_FILE )
-  if err != nil {
-    panic(err)
-  }
-  
-  create_table(CPUTIMES_TB, CPUTIMES_CREATE, conn)
-  create_table(LOADAVG_TB, LOADAVG_CREATE, conn)
-  create_table(MEMORY_TB, MEMORY_CREATE, conn)
-  
-  err = conn.Close()
-  if err != nil {
-  	Err("Closing local DB: "+err.Error())
-  }
-}
 
 func openConn() (*sqlite3.Conn) {
 	file_exists,_ := File_exists(DB_FILE)
