@@ -18,6 +18,7 @@ const (
   
   CPUTIMES_CREATE string = `CREATE TABLE `+CPUTIMES_TB+`(
     id INTEGER PRIMARY KEY ASC,
+    hostid TEXT,
     cpuid TEXT,
     unixtime INTEGER,
     user REAL,
@@ -27,6 +28,7 @@ const (
   
   LOADAVG_CREATE string = `CREATE TABLE `+LOADAVG_TB+`(
     id INTEGER PRIMARY KEY ASC,
+	hostid TEXT,
     unixtime INTEGER,
     load1 REAL,
     load5 REAL,
@@ -35,6 +37,7 @@ const (
 
   MEMORY_CREATE string = `CREATE TABLE `+MEMORY_TB+`(
     id INTEGER PRIMARY KEY ASC,
+    hostid TEXT,
     unixtime INTEGER,
     total_ram INTEGER,
     ram_free INTEGER,
