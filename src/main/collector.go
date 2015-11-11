@@ -41,8 +41,8 @@ func collector_task(){
 			user := cputime.User
 			syst := cputime.System
 			idle := cputime.Idle
-			query := "INSERT INTO "+CPUTIMES_TB+" (cpuid,unixtime,user,sys,idle) values(?,?,?,?,?)"
-			err := conn.Exec(query, cpuid, unixtime, user, syst, idle)
+			query := "INSERT INTO "+CPUTIMES_TB+" (cpuid,hostid,unixtime,user,sys,idle) values(?,?,?,?,?,?)"
+			err := conn.Exec(query, cpuid, host, unixtime, user, syst, idle)
 			if err != nil {
 				Err("saving data to "+CPUTIMES_TB+" table: "+err.Error())
 			}
@@ -53,8 +53,8 @@ func collector_task(){
 		load1 := loadAvg.Load1
 		load5 := loadAvg.Load5
 		load15 := loadAvg.Load15
-		query := "INSERT INTO "+LOADAVG_TB+" (unixtime,load1,load5,load15) values(?,?,?,?)"
-		err := conn.Exec(query, unixtime, load1, load5, load15)
+		query := "INSERT INTO "+LOADAVG_TB+" (hostid,unixtime,load1,load5,load15) values(?,?,?,?,?)"
+		err := conn.Exec(query, host, unixtime, load1, load5, load15)
 		if err != nil {
 			Err("saving data to "+LOADAVG_TB+" table: "+err.Error())
 		}
@@ -72,9 +72,9 @@ func collector_task(){
 		swap_used_perc := swap.UsedPercent
 		
 		query = "INSERT INTO "+MEMORY_TB+
-		   " (unixtime,total_ram,ram_free,ram_used_percent,total_swap,swap_free,swap_used_percent ) "+
-		   "values(?,?,?,?,?,?,?)"
-		err = conn.Exec(query, unixtime, total_ram, ram_free, ram_used_perc, swap_total, swap_free, swap_used_perc)
+		   " (hostid,unixtime,total_ram,ram_free,ram_used_percent,total_swap,swap_free,swap_used_percent ) "+
+		   "values(?,?,?,?,?,?,?,?)"
+		err = conn.Exec(query, host, unixtime, total_ram, ram_free, ram_used_perc, swap_total, swap_free, swap_used_perc)
 		
 		if err != nil {
 			Err("saving data to "+MEMORY_TB+" table: "+err.Error())
