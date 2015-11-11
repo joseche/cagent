@@ -56,7 +56,6 @@ func init_ssl() {
 		return 
 	}
 	
-	
 	host, _ = os.Hostname()
 	priv, err := ecdsa.GenerateKey(elliptic.P224(), rand.Reader)
 	if err != nil {
@@ -112,7 +111,7 @@ func init_ssl() {
 	}
 	pem.Encode(certOut, &pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
 	certOut.Close()
-	Info("written "+CERT_FILE+"\n")
+	Info("written "+CERT_FILE)
 
 	keyOut, err := os.OpenFile(CERT_KEY, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {
@@ -120,7 +119,7 @@ func init_ssl() {
 	}
 	pem.Encode(keyOut, pemBlockForKey(*priv))
 	keyOut.Close()
-	Info("written "+CERT_KEY+"\n")
+	Info("written "+CERT_KEY)
 }
 
 
@@ -128,4 +127,5 @@ func initialize(){
 	init_dir()
 	init_db()
 	init_ssl()
+	host = hostid()
 }
