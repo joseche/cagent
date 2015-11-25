@@ -4,7 +4,7 @@ package main
 
 /*
 I am using P224 Elliptic Curve Diffie Hellman keys, 224 bits long, 
-Equivalent to RSA 2048 bits. This reduces cycles while ensuring high level encryption
+equivalent to RSA 2048 bits. This reduces cycles while ensuring high level encryption
 */
 
 import (
@@ -18,8 +18,8 @@ import (
 
 const (
 	CERT_ORG  string = "Performance Labs"
-	CERT_FILE string = MASTER_DIR + "perflabs.cert.pem"
-	CERT_KEY  string = MASTER_DIR + "perflabs.key.pem"
+	CERT_FILE string = MASTER_DIR + "localcert.pem"
+	CERT_KEY  string = MASTER_DIR + "localkey.pem"
 )
 
 func pemBlockForKey(priv ecdsa.PrivateKey) *pem.Block {

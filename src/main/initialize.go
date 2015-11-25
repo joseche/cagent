@@ -50,7 +50,6 @@ func init_db(){
 }
 
 func init_ssl() {
-	
 	key_exists, _ := File_exists(CERT_KEY)
 	if key_exists {
 		return 
