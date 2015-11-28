@@ -1,4 +1,4 @@
-package main
+package misc
 
 import (
 	"github.com/mxk/go-sqlite/sqlite3"
@@ -10,6 +10,9 @@ type Table struct {
 }
 
 const (
+  DEBUG      bool   = true
+  MASTER_DIR string = "/opt/clarity/"
+	
   DB_FILE string = MASTER_DIR + "/pending"
   
   CPUTIMES_TB string = "CpuTimes"
@@ -74,7 +77,7 @@ func create_table(tbname string, tbcreate string, conn *sqlite3.Conn) (created b
 }
 
 
-func openConn() (*sqlite3.Conn) {
+func OpenConn() (*sqlite3.Conn) {
 	file_exists,_ := File_exists(DB_FILE)
   	if ! file_exists {
   		init_db()

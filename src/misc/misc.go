@@ -1,4 +1,4 @@
-package main
+package misc
 
 import (
 	"os"
@@ -14,8 +14,11 @@ import (
 	"net"
 	"time"
 	"strings"
+	"fmt"
 )
 
+var Running bool = true
+var Host string
 
 func init_dir(){
 	dir_exists,_ := File_exists(MASTER_DIR)
@@ -55,7 +58,7 @@ func init_ssl() {
 		return 
 	}
 	
-	host, _ = os.Hostname()
+	Host, _ = os.Hostname()
 	priv, err := ecdsa.GenerateKey(elliptic.P224(), rand.Reader)
 	if err != nil {
 		panic("failed to generate private key: " + err.Error())
@@ -87,7 +90,7 @@ func init_ssl() {
 		BasicConstraintsValid: true,
 	}
 
-	hosts := strings.Split(host, ",")
+	hosts := strings.Split(Host, ",")
 	for _, h := range hosts {
 		if ip := net.ParseIP(h); ip != nil {
 			template.IPAddresses = append(template.IPAddresses, ip)
@@ -122,9 +125,37 @@ func init_ssl() {
 }
 
 
-func initialize(){
+func UpdateTicker(interval time.Duration, name string) *time.Ticker {
+    nextTick := time.Now().Add(interval)
+    fmt.Println(nextTick, name+" - next tick")
+    diff := nextTick.Sub(time.Now())
+    return time.NewTicker(diff)
+}
+
+func File_exists(path string) (bool, error) {
+    _, err := os.Stat(path)
+    if err == nil { return true, nil }
+    if os.IsNotExist(err) { return false, nil }
+    return true, err
+}
+
+func Info(msg string){
+	fmt.Println("info: "+msg)
+}
+
+func Err(msg string){
+	fmt.Println("Error: "+msg)
+}
+
+func Debug(msg string){
+	if DEBUG {
+		fmt.Println("debug: "+msg)
+  	}
+}
+
+func Initialize(){
 	init_dir()
 	init_db()
 	init_ssl()
-	host = hostid()
+	Host = hostid()
 }

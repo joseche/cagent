@@ -1,18 +1,15 @@
 package main
 
-const (
-	DEBUG      bool   = true
-	MASTER_DIR string = "/opt/cloudmetrics/"
+import (
+	"collector"
+	"misc"
 )
 
-var Running bool = true
-var host string
-
 func main() {
-	initialize()
+	misc.Initialize()
 
 	collector_done := make(chan bool)
-	go collector_routine(collector_done)
+	go collector.Collector_routine(collector_done)
 
 	<-collector_done
 }

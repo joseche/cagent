@@ -1,4 +1,4 @@
-package main
+package misc
 
 // https://golang.org/src/crypto/tls/generate_cert.go
 
