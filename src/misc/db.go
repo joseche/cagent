@@ -15,19 +15,9 @@ const (
 	
   DB_FILE string = MASTER_DIR + "/pending"
   
-  CPUTIMES_TB string = "CpuTimes"
   LOADAVG_TB string = "LoadAVG"
+  CPUTIMES_TB string = "CpuTimes"
   MEMORY_TB string = "Memory"
-  
-  CPUTIMES_CREATE string = `CREATE TABLE `+CPUTIMES_TB+`(
-    id INTEGER PRIMARY KEY ASC,
-    hostid TEXT,
-    cpuid TEXT,
-    unixtime INTEGER,
-    user REAL,
-    sys REAL,
-    idle REAL
-    )`
   
   LOADAVG_CREATE string = `CREATE TABLE `+LOADAVG_TB+`(
     id INTEGER PRIMARY KEY ASC,
@@ -37,7 +27,25 @@ const (
     load5 REAL,
     load15 REAL
     )`
-
+  
+  CPUTIMES_CREATE string = `CREATE TABLE `+CPUTIMES_TB+`(
+    id INTEGER PRIMARY KEY ASC,
+    hostid TEXT,
+    cpuid TEXT,
+    unixtime INTEGER,
+    user REAL,
+    sys REAL,
+    idle REAL,
+    nice REAL, 
+    iowait REAL,
+    irq REAL,
+    softirq REAL,
+    steal REAL,
+    guest REAL,
+    guest_nice REAL,
+    stolen REAL
+    )`
+  
   MEMORY_CREATE string = `CREATE TABLE `+MEMORY_TB+`(
     id INTEGER PRIMARY KEY ASC,
     hostid TEXT,

@@ -30,24 +30,9 @@ func collector_task(){
 		
 		// por ahora todo va aqui, en el proximo prototipo habra archivos separados
 		
-		
 		now := time.Now()
 		unixtime := now.Unix()
 		//-=-=-=-=-=-=- Start of collector cycle
-		
-		// collect CPUTimes
-		cpuTimes, _ := cpu.CPUTimes(true)
-		for _, cputime := range cpuTimes {
-			cpuid := cputime.CPU
-			user := cputime.User
-			syst := cputime.System
-			idle := cputime.Idle
-			query := "INSERT INTO "+misc.CPUTIMES_TB+" (cpuid,hostid,unixtime,user,sys,idle) values(?,?,?,?,?,?)"
-			err := conn.Exec(query, cpuid, misc.Host, unixtime, user, syst, idle)
-			if err != nil {
-				misc.Err("saving data to "+misc.CPUTIMES_TB+" table: "+err.Error())
-			}
-		}
 		
 		// collect LoadAVG
 		loadAvg, _ := load.LoadAvg()
@@ -59,6 +44,32 @@ func collector_task(){
 		if err != nil {
 			misc.Err("saving data to "+misc.LOADAVG_TB+" table: "+err.Error())
 		}
+		
+		// collect CPUTimes
+		cpuTimes, _ := cpu.CPUTimes(true)
+		for _, cputime := range cpuTimes {
+		   cpuid := cputime.CPU
+			user := cputime.User
+			syst := cputime.System
+			idle := cputime.Idle
+			nice := cputime.Nice
+			iowait := cputime.Iowait
+			irq := cputime.Irq
+			softirq := cputime.Softirq
+			steal := cputime.Steal
+			guest := cputime.Guest
+			guest_nice := cputime.GuestNice
+			stolen := cputime.Stolen
+			
+			query := "INSERT INTO "+misc.CPUTIMES_TB+
+				" (cpuid,hostid,unixtime,user,sys,idle,nice,"+
+				"iowait,irq,softirq,steal,guest,guest_nice,stolen) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+			err := conn.Exec(query, cpuid, misc.Host, unixtime, user, syst, idle, nice, iowait, irq, softirq, steal, guest, guest_nice, stolen)
+			if err != nil {
+				misc.Err("saving data to "+misc.CPUTIMES_TB+" table: "+err.Error())
+			}
+		}
+		
 		
 		// collect Memory
 		ram, _ := mem.VirtualMemory()
