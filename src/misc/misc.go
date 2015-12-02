@@ -44,7 +44,8 @@ func init_db(){
 	  
 	create_table(CPUTIMES_TB, CPUTIMES_CREATE, conn)
 	create_table(LOADAVG_TB, LOADAVG_CREATE, conn)
-	create_table(MEMORY_TB, MEMORY_CREATE, conn)
+	create_table(VIRTUAL_MEMORY_TB, VIRTUAL_MEMORY_CREATE, conn)
+	create_table(SWAP_MEMORY_TB, SWAP_MEMORY_CREATE, conn)
 	  
 	err = conn.Close()
 	if err != nil {

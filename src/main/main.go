@@ -16,4 +16,5 @@ func main() {
 	go pusher.Pusher_routine(pusher_done)
 
 	<-collector_done
+	<-pusher_done
 }

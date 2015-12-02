@@ -17,7 +17,8 @@ const (
   
   LOADAVG_TB string = "LoadAVG"
   CPUTIMES_TB string = "CpuTimes"
-  MEMORY_TB string = "Memory"
+  VIRTUAL_MEMORY_TB string = "VirtualMemory"
+  SWAP_MEMORY_TB string = "SwapMemory"
   
   LOADAVG_CREATE string = `CREATE TABLE `+LOADAVG_TB+`(
     id INTEGER PRIMARY KEY ASC,
@@ -46,18 +47,34 @@ const (
     stolen REAL
     )`
   
-  MEMORY_CREATE string = `CREATE TABLE `+MEMORY_TB+`(
+  VIRTUAL_MEMORY_CREATE string = `CREATE TABLE `+VIRTUAL_MEMORY_TB+`(
     id INTEGER PRIMARY KEY ASC,
     hostid TEXT,
     unixtime INTEGER,
-    total_ram INTEGER,
-    ram_free INTEGER,
-    ram_used_percent REAL,
-    total_swap INTEGER,
-    swap_free INTEGER,
-    swap_used_percent REAL
+    total INTEGER,
+    available INTEGER,
+    used INTEGER,
+    usedpercent REAL,
+    free INTEGER,
+    active INTEGER,
+    inactive INTEGER,
+    buffers INTEGER,
+    cached INTEGER,
+    wired INTEGER,
+    shared INTEGER
     )`
-   	
+  
+  SWAP_MEMORY_CREATE string = `CREATE TABLE `+SWAP_MEMORY_TB+`(
+    id INTEGER PRIMARY KEY ASC,
+    hostid TEXT,
+    unixtime INTEGER,
+    total INTEGER,
+    used INTEGER,
+    free INTEGER,
+    usedpercent REAL,
+    sin INTEGER,
+    sout INTEGER
+    )` 	
 )
 
 func create_table(tbname string, tbcreate string, conn *sqlite3.Conn) (created bool){ 
